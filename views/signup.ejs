@@ -6,7 +6,9 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="/signup" method="POST">
+     <%- include('./partials/errors.ejs') %>
+
+    <form action="/sign-up" method="POST">
         <div>
             <label for="fname">First Name</label>
             <input id="fname" name="firstname" type="text">
@@ -25,7 +27,19 @@
         </div>
         <div>
             <label for="conf-password">Confirm Password</label>
-            <input id="conf-password" name="confPassowrd" type="password">
+            <input id="conf-password" name="confPassword" type="password">
+        </div>
+
+        <div>
+            <label for="is-admin">Is Admin?</label>
+            <input id="is-admin" name="isAdmin" type="radio">
+        </div>
+        <div>
+            <label for="member">Is a member?</label>
+            <input id="member" name="member" type="member">
+        </div>
+        <div>
+            <input value="Login" type="Submit">
         </div>
 
 

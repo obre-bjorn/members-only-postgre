@@ -4,6 +4,8 @@ const passport = require('passport')
 const LocalStrategy = require('passport-local')
 const path = require('path')
 
+const userController = require('./controllers/usersController')
+
 
 const app = express()
 
@@ -18,6 +20,13 @@ app.get("/" , (req,res) => {
     res.render("index")
 
 })
+
+app.get('/sign-up', userController.getUserSignUp)
+app.post('/sign-up',userController.postUserSignUp)
+
+
+
+
 
 app.listen(3000, ()=>{
     console.log("Server running on port 3000")
