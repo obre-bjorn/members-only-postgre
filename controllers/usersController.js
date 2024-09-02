@@ -17,7 +17,9 @@ const validateSignUpData = [
         .isAlpha()
         .withMessage("Name must only use alphabet letters"),
     body('email')
-        .isEmail().withMessage(`Must be a valid Email`),
+        .trim()
+        .isEmail()
+        .withMessage(`Must be a valid Email`),
     body('password')
         .trim()
         .notEmpty()
@@ -46,16 +48,15 @@ const getUserSignUp = (req,res) =>{
 
 
 const postUserSignUp = [validateSignUpData,
-    (req,res,next) =>{
+    async (req,res,next) =>{
 
         const errors = validationResult(req)
-        console.log("Errors" + errors)
         if(!errors.isEmpty()){
             return res.status(400).render('signup', {errors : errors.array()})
         }
 
+        await db.createtUser(req.body)
 
-        console.log(req.body)
         res.redirect("/")
 }]
 
