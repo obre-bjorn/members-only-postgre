@@ -1,5 +1,5 @@
 const {body, validationResult} = require('express-validator')
-
+const bcrypt = require('bcryptjs')
 const db = require("../db/queries")
 
 
@@ -55,6 +55,8 @@ const postUserSignUp = [validateSignUpData,
             return res.status(400).render('signup', {errors : errors.array()})
         }
 
+        req.body.password = await bcrypt.hash(req.body.password, 10)
+        
         await db.createtUser(req.body)
 
         res.redirect("/")
