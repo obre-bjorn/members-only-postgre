@@ -12,7 +12,19 @@
         <h1>WELCOME BACK <%= user.first_name + " " + user.last_name %></h1>
         <a href="/log-out">LOG OUT</a>
 
+        <br>
 
+        <form action="/join-club" method="POST">
+
+            <div>
+                
+                <label for="key">Enter Secret Key</label>
+                <input id="key" name="key" type="text">
+            
+                <input type="submit" value="JOIN CLUB">
+            </div>
+
+        </form>
 
         <form action="/message/add-message" method="POST">
             <h1>Write Message</h1>
@@ -30,6 +42,24 @@
             <input type="submit" value="Send Message">
 
         </form>
+
+
+
+        <!-- All Messages -->
+        
+        <% messages.forEach(message => { %>
+        <div>
+            <h2><%= message.title %></h2>
+            <p><%= message.content %></p>
+            <% if (user && user.membership_status) { %>
+                <p>By: <%= message.first_name %> <%= message.last_name %></p>
+                <p>Date: <%= message.timestamp %></p>
+            <% } %>
+        </div>
+        <% }) %>
+
+
+
 
      <% } else { %>
 

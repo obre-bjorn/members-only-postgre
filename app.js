@@ -5,6 +5,7 @@ const LocalStrategy = require('passport-local')
 
 //TO refactor
 const db = require('./db/pool')
+const query = require('./db/queries')
 const bcrypt = require('bcryptjs')
 const userController = require('./controllers/usersController')
 
@@ -74,9 +75,12 @@ passport.deserializeUser(async (id, done) =>{
 app.use('/message',messageRouter)
 
 
-app.get("/" , (req,res) => {
+app.get("/" , async (req,res) => {
 
-    res.render("index", {user : req.user})
+    const messages = await query.getAllMessages() 
+    console.log(messages)
+    
+    res.render('index', { messages, user: req.user });
 
 })
 
@@ -98,6 +102,19 @@ app.get('/log-out',(req,res,next) =>{
     }
     res.redirect("/");
   });
+})
+
+app.post('/join-club', async (req,res) =>{
+    const secret_key = "damdam"
+
+    if (req.body.key  === secret_key){
+        
+        await query.grantMembership(req.user.id)
+        
+    }
+    
+    
+    res.redirect('/')
 })
 
 

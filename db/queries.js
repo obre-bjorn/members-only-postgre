@@ -31,7 +31,6 @@ async function createMessage({title, content}, user){
         await db.query(query,values)
 
 
-
     }catch(error){
 
         console.log(error)
@@ -39,11 +38,52 @@ async function createMessage({title, content}, user){
 
     }
 
-
 }
 
 
+async function deleteMessage(id){
+
+
+    res.send(`This ${req.body.id}  to be deleted`)
+}
+
+
+async function grantMembership(id){
+
+
+    try {
+
+        const query = "UPDATE users SET membership_status = TRUE WHERE id = $1"
+        
+        await db.query(query,[id])
+
+    
+
+    }catch(err){
+        cosnolelog("Error: ", err)
+    }
+}
+
+
+
+async function getAllMessages(){
+
+    const query = `
+    SELECT m.*, u.first_name, u.last_name 
+    FROM messages m 
+    JOIN users u ON m.author_id = u.id
+    ORDER BY m.timestamp DESC
+  `;
+    const result = await db.query(query);
+    const messages = result.rows;
+
+
+    return messages
+}
+
 module.exports = {
     createtUser,
-    createMessage
+    createMessage,
+    grantMembership,
+    getAllMessages
 }
