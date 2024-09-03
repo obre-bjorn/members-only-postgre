@@ -6,9 +6,11 @@ const LocalStrategy = require('passport-local')
 //TO refactor
 const db = require('./db/pool')
 const bcrypt = require('bcryptjs')
-
 const userController = require('./controllers/usersController')
 
+
+//Routers 
+const messageRouter = require('./routes/messages')
 
 const app = express()
 
@@ -66,6 +68,11 @@ passport.deserializeUser(async (id, done) =>{
     }
 
 })
+
+
+//Register routes
+app.use('/message',messageRouter)
+
 
 app.get("/" , (req,res) => {
 

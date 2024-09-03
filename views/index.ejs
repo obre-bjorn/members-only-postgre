@@ -14,9 +14,20 @@
 
 
 
-        <form action="add-message" method="POST">
-
+        <form action="/message/add-message" method="POST">
+            <h1>Write Message</h1>
             
+             <div>
+                <label for="title">Title: </label>
+                <input id="title" name="title" type="text">
+            </div>
+
+             <div>
+                <label for="content">Message: </label>
+                <input id="content" name="content" type="text">
+            </div>
+
+            <input type="submit" value="Send Message">
 
         </form>
 

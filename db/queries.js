@@ -20,6 +20,30 @@ async function createtUser({firstname,lastname,email,password}){
 }
 
 
+async function createMessage({title, content}, user){
+    
+    try{
+
+        const query = `INSERT INTO messages (title, content,author_id ) VALUES ($1, $2, $3)`
+        const values = [title,content, user.id]
+
+
+        await db.query(query,values)
+
+
+
+    }catch(error){
+
+        console.log(error)
+        return
+
+    }
+
+
+}
+
+
 module.exports = {
-    createtUser
+    createtUser,
+    createMessage
 }
