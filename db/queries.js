@@ -41,10 +41,17 @@ async function createMessage({title, content}, user){
 }
 
 
+
 async function deleteMessage(id){
 
+    try {
+        
+        await db.query('DELETE FROM messages WHERE id = $1', [id])
+        
+    } catch (error) {
+        console.log(error)
+    }
 
-    res.send(`This ${req.body.id}  to be deleted`)
 }
 
 
@@ -60,10 +67,25 @@ async function grantMembership(id){
     
 
     }catch(err){
-        cosnolelog("Error: ", err)
+        console.log("Error: ", err)
     }
 }
 
+async function grantAdminPermission(id){
+
+
+    try {
+
+        const query = "UPDATE users SET is_admin = TRUE WHERE id = $1"
+        
+        await db.query(query,[id])
+
+    
+
+    }catch(err){
+        console.log("Error: ", err)
+    }
+}
 
 
 async function getAllMessages(){
@@ -85,5 +107,7 @@ module.exports = {
     createtUser,
     createMessage,
     grantMembership,
-    getAllMessages
+    getAllMessages,
+    deleteMessage,
+    grantAdminPermission
 }

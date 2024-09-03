@@ -17,7 +17,23 @@ async function addMessage(req,res,next) {
 }
 
 
+async function deleteMessage(req,res,next){
+
+    try {
+        
+        await db.deleteMessage(req.body.messageid)
+        res.redirect('/')
+
+    }catch(err){
+        console.log(err)
+
+    }
+
+}
+
+
 
 module.exports = {
-    addMessage
+    addMessage,
+    deleteMessage
 }

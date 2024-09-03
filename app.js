@@ -78,7 +78,6 @@ app.use('/message',messageRouter)
 app.get("/" , async (req,res) => {
 
     const messages = await query.getAllMessages() 
-    console.log(messages)
     
     res.render('index', { messages, user: req.user });
 
@@ -108,7 +107,6 @@ app.post('/join-club', async (req,res) =>{
     const secret_key = "damdam"
 
     if (req.body.key  === secret_key){
-        
         await query.grantMembership(req.user.id)
         
     }
@@ -117,6 +115,12 @@ app.post('/join-club', async (req,res) =>{
     res.redirect('/')
 })
 
+app.post('/grant-admin', async (req,res) =>{
+
+        await query.grantAdminPermission(req.user.id)
+    
+    res.redirect('/')
+})
 
 
 

@@ -25,7 +25,14 @@
             </div>
 
         </form>
+        <br>
+        <form action="/grant-admin" method="POST">
+                    <label for="isAdmin">Is user Admin</label>
+                    <input  type="checkbox" name="isAdmin" id="isAdmin">
+                    <input type="submit" value="Grant Admin">
+                </form>
 
+                <br>
         <form action="/message/add-message" method="POST">
             <h1>Write Message</h1>
             
@@ -43,7 +50,7 @@
 
         </form>
 
-
+        <br>
 
         <!-- All Messages -->
         
@@ -51,9 +58,21 @@
         <div>
             <h2><%= message.title %></h2>
             <p><%= message.content %></p>
-            <% if (user && user.membership_status) { %>
+            <% if (user && user.membership_status || user.is_admin) { %>
                 <p>By: <%= message.first_name %> <%= message.last_name %></p>
                 <p>Date: <%= message.timestamp %></p>
+
+
+                
+            <% } %>
+
+            <% if (user.is_admin) { %>
+                
+                <form action="/message/delete-message" method="POST">
+                    <input type="hidden" name="messageid" value="<%= message.id %>" >
+                    <input type="submit" value="Delete Message">
+                </form>
+
             <% } %>
         </div>
         <% }) %>
@@ -83,12 +102,14 @@
 
         </form>
 
+        <p>Do not have an account <a href="/sign-up">Sign Up</a> Here.</p>
+
     <%}%>
 
 
 
     <!-- <h1>"Welcome to the Club"</h1> -->
 
-    <p>Do not have an account <a href="/sign-up">Sign Up</a> Here.</p>
+    
 </body>
 </html>
